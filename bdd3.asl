@@ -23,6 +23,7 @@ startup
     settings.Add("4CARRETA.bsp", true, "CARRETA");
     settings.Add("5salga.bsp", true, "SALGA");
     settings.Add("chavinha19.bsp", true, "CHAVINHA");
+    settings.Add("pierniteroi.bsp", true, "PIERNITEROI");  
     settings.Add("praca16.bsp", true, "PRACA");
     settings.Add("5aniversarioguanaSAOGONCALO.bsp", true, "ANIVERSARIO");
     settings.Add("surfamazonia.bsp", true, "SURFMAZONIA");
