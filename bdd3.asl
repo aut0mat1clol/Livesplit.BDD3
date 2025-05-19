@@ -1,6 +1,6 @@
 state("AVIAO3GAME")
 {
-    string20 LevelName: "AVIAO3GAME.EXE", 0x1E7DF5;
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1E759D;
     float IGT: "AVIAO3GAME.EXE", 0xDDA74C;
     float Loading: "AVIAO3GAME.EXE", 0xDDB4CC;
     byte isFinished: "AVIAO3GAME.EXE", 0xDDC210;
