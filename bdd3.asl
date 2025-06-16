@@ -18,7 +18,7 @@ update
 
 startup
 {
-    setting.Add("NGP", true, "Timer start after loading NG+ save")
+    settings.Add("NGP", true, "Timer start after loading NG+ save")
     settings.Add("2MAPA2.bsp", true, "MAPA2");
     settings.Add("3MAPAtreze.bsp", true, "MAPATREZE");
     settings.Add("4CARRETA.bsp", true, "CARRETA");
