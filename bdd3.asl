@@ -18,6 +18,7 @@ update
 
 startup
 {
+    setting.Add("NGP", true, "Timer start after loading NG+ save")
     settings.Add("2MAPA2.bsp", true, "MAPA2");
     settings.Add("3MAPAtreze.bsp", true, "MAPATREZE");
     settings.Add("4CARRETA.bsp", true, "CARRETA");
@@ -46,7 +47,13 @@ startup
 }
 start
 {
-    if (current.IGT <= 0.1 && current.LevelName == "start.bsp")
+    if (current.IGT <= 0.1 && current.LevelName == "start.bsp" && settings["NGP"] == false)
+    {
+        vars.doneMaps.Add("");
+        vars.doneMaps.Add(current.LevelName);
+        return true;
+    }
+    if (current.IGT <= 0.1 && current.LevelName == "1MAPA1.bsp" && settings["NGP"] == true)
     {
         vars.doneMaps.Add("");
         vars.doneMaps.Add(current.LevelName);
