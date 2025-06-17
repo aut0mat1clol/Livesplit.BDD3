@@ -91,6 +91,10 @@ reset
     {  
         return true;
     }
+    if(current.IGT == 0 && current.LevelName == "1MAPA1.bsp" && old.LevelName != "1MAPA1.bsp")
+    {  
+        return true;
+    }
 }
 onReset
 {
