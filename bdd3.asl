@@ -1,9 +1,9 @@
 state("AVIAO3GAME")
 {
-    string20 LevelName: "AVIAO3GAME.EXE", 0x1EA2BD;
-    float IGT: "AVIAO3GAME.EXE", 0xA6BCF8;
-    float Loading: "AVIAO3GAME.EXE", 0xDDD70C;
-    byte isFinished: "AVIAO3GAME.EXE", 0xDDE850;
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1EA2BD; // Level Name
+    float IGT: "AVIAO3GAME.EXE", 0xA6BCF8; // In-Game Timer
+    float Loading: "AVIAO3GAME.EXE", 0xDDD70C; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3GAME.EXE", 0xDDE850; // values: 0 (Not Finished), 1 (Finished)
 }
 
 init
@@ -13,7 +13,7 @@ init
 
 update
 {
-        print(current.LevelName);
+    //print(current.LevelName);
 }
 
 startup
@@ -31,6 +31,7 @@ startup
     settings.Add("zegaroto.bsp", true, "ZEGAROTO");
     settings.Add("RODOPRACAMARISACAMELO.bsp", true, "RODOPRACAMARISACAMELO");
     settings.Add("partaginrocket.bsp", true, "PARTAGINROCKET");
+    settings.Add("myhouse.bsp", true, "MYHOUSE");    
     settings.Add("6GLOBE.bsp", true, "GLOBE");
     settings.Add("7niteroi.bsp", true, "NITEROI");
     settings.Add("8varginhao.bsp", true, "VARGINHAO");
@@ -47,13 +48,13 @@ startup
 }
 start
 {
-    if (current.IGT <= 0.1 && current.LevelName == "start.bsp" && settings["NGP"] == false)
+    if (current.IGT <= 1.5 && current.LevelName == "start.bsp" && settings["NGP"] == false)
     {
         vars.doneMaps.Add("");
         vars.doneMaps.Add(current.LevelName);
         return true;
     }
-    if (current.IGT <= 0.1 && current.LevelName == "1MAPA1.bsp" && settings["NGP"] == true)
+    if (current.IGT <= 1.5 && current.LevelName == "1MAPA1.bsp" && settings["NGP"] == true)
     {
         vars.doneMaps.Add("");
         vars.doneMaps.Add(current.LevelName);
@@ -62,6 +63,7 @@ start
 }
 split
 {
+    // Split on level change
 	if(current.LevelName != old.LevelName && !vars.doneMaps.Contains(current.LevelName)) {
 		if(current.Loading == 0)
 		{
@@ -69,6 +71,7 @@ split
 			return true;
 		}
 	}
+    // Last split
     if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0)
     {
         return true;
@@ -80,18 +83,18 @@ isLoading
     {
         return true;
     }
-    if(current.Loading == 22)
+    if(current.Loading > 0)
     {
         return false;
     }
 }
 reset
 {
-    if(current.IGT == 0 && current.LevelName == "start.bsp" && old.LevelName != "start.bsp")
+    if(current.IGT <= 1.5 && current.LevelName == "start.bsp")
     {  
         return true;
     }
-    if(current.IGT == 0 && current.LevelName == "1MAPA1.bsp" && old.LevelName != "1MAPA1.bsp")
+    if(current.IGT <= 1.5 && current.LevelName == "1MAPA1.bsp")
     {  
         return true;
     }
