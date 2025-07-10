@@ -1,19 +1,38 @@
-state("AVIAO3GAME")
+state("AVIAO3GAME", "EA")
 {
     string20 LevelName: "AVIAO3GAME.EXE", 0x1EA2BD; // Level Name
     float IGT: "AVIAO3GAME.EXE", 0xA6BCF8; // In-Game Timer
     float Loading: "AVIAO3GAME.EXE", 0xDDD70C; // values: 0 (Loading), 22 (Playing)
     byte isFinished: "AVIAO3GAME.EXE", 0xDDE850; // values: 0 (Not Finished), 1 (Finished)
 }
+state("AVIAO3", "Demo")
+{
+    string20 LevelName: "AVIAO3.exe", 0x1AC37D; // Level Name
+    float IGT: "AVIAO3.exe", 0xA2C458; // In-Game Timer
+    float Loading: "AVIAO3.exe", 0xD9DB6C; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3.exe", 0xD9ECB0; // values: 0 (Not Finished), 1 (Finished)
+}
+
 
 init
 {
     vars.doneMaps = new List<string>();
-}
 
+    switch (modules.First().ModuleMemorySize) {
+    case 15806464:
+        version = "EA";
+        print("Using EA version");
+        break;
+    case 15306752:
+        version = "Demo";
+        print("Using Demo version");
+        break;
+    default:
+        throw new Exception("Unknown version: " + modules.First().ModuleMemorySize);
+    }
+}
 update
 {
-    //print(current.LevelName);
 }
 
 startup
@@ -71,8 +90,13 @@ split
 			return true;
 		}
 	}
-    // Last split
-    if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0)
+    // Last EA split
+    if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0 && version == "EA")
+    {
+        return true;
+    }
+    // Last Demo split
+    if(current.LevelName == "salga.bsp" && current.isFinished == 1 && current.Loading == 0 && version == "Demo")
     {
         return true;
     }
