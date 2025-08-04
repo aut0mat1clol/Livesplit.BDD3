@@ -1,4 +1,4 @@
-state("AVIAO3GAME", "EA")
+state("AVIAO3GAME", "EA - May 18th")
 {
     string20 LevelName: "AVIAO3GAME.EXE", 0x1EA2BD; // Level Name
     float IGT: "AVIAO3GAME.EXE", 0xA6BCF8; // In-Game Timer
@@ -20,7 +20,7 @@ init
 
     switch (modules.First().ModuleMemorySize) {
     case 15806464:
-        version = "EA";
+        version = "EA - May 18th";
         print("Using EA version");
         break;
     case 15306752:
@@ -127,3 +127,4 @@ onReset
 {
 	vars.doneMaps.Clear();    
 }
+
