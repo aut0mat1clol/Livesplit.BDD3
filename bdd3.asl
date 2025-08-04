@@ -5,6 +5,13 @@ state("AVIAO3GAME", "EA - May 18th")
     float Loading: "AVIAO3GAME.EXE", 0xDDD70C; // values: 0 (Loading), 22 (Playing)
     byte isFinished: "AVIAO3GAME.EXE", 0xDDE850; // values: 0 (Not Finished), 1 (Finished)
 }
+state("AVIAO3GAME", "EA - August 1st")
+{
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1EA79D; // Level Name
+    float IGT: "AVIAO3GAME.EXE", 0xA6CE78; // In-Game Timer
+    float Loading: "AVIAO3GAME.EXE", 0xDDE88C; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3GAME.EXE", 0x783704; // values: 0 (Not Finished), 1 (Finished)
+}
 state("AVIAO3", "Demo")
 {
     string20 LevelName: "AVIAO3.exe", 0x1AC37D; // Level Name
@@ -13,15 +20,18 @@ state("AVIAO3", "Demo")
     byte isFinished: "AVIAO3.exe", 0xD9ECB0; // values: 0 (Not Finished), 1 (Finished)
 }
 
-
 init
 {
     vars.doneMaps = new List<string>();
 
     switch (modules.First().ModuleMemorySize) {
+    case 15810560:
+        version = "EA - August 1st";
+        print("Using EA - August 1st version");
+        break;
     case 15806464:
         version = "EA - May 18th";
-        print("Using EA version");
+        print("Using EA - May 18th version");
         break;
     case 15306752:
         version = "Demo";
@@ -37,7 +47,7 @@ update
 
 startup
 {
-    settings.Add("NGP", true, "Timer start after loading NG+ save");
+    settings.Add("NGP", false, "Timer start after loading NG+ save");
     settings.Add("2MAPA2.bsp", true, "MAPA2");
     settings.Add("3MAPAtreze.bsp", true, "MAPATREZE");
     settings.Add("4CARRETA.bsp", true, "CARRETA");
@@ -50,7 +60,8 @@ startup
     settings.Add("zegaroto.bsp", true, "ZEGAROTO");
     settings.Add("RODOPRACAMARISACAMELO.bsp", true, "RODOPRACAMARISACAMELO");
     settings.Add("partaginrocket.bsp", true, "PARTAGINROCKET");
-    settings.Add("myhouse.bsp", true, "MYHOUSE");    
+    settings.Add("myhouse.bsp", true, "MYHOUSE");   
+    settings.Add("jiboyaskate.bsp", true, "JIBOYASKATE"); 
     settings.Add("6GLOBE.bsp", true, "GLOBE");
     settings.Add("7niteroi.bsp", true, "NITEROI");
     settings.Add("8varginhao.bsp", true, "VARGINHAO");
@@ -111,6 +122,7 @@ isLoading
     {
         return false;
     }
+
 }
 reset
 {
@@ -127,4 +139,3 @@ onReset
 {
 	vars.doneMaps.Clear();    
 }
-
