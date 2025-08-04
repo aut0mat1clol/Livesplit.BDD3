@@ -102,7 +102,7 @@ split
 		}
 	}
     // Last EA split
-    if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0 && version == "EA")
+    if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0)
     {
         return true;
     }
@@ -139,3 +139,4 @@ onReset
 {
 	vars.doneMaps.Clear();    
 }
+
