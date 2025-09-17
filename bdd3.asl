@@ -1,16 +1,9 @@
-state("AVIAO3GAME", "EA - May 18th")
+state("AVIAO3GAME", "1.0")
 {
-    string20 LevelName: "AVIAO3GAME.EXE", 0x1EA2BD; // Level Name
-    float IGT: "AVIAO3GAME.EXE", 0xA6BCF8; // In-Game Timer
-    float Loading: "AVIAO3GAME.EXE", 0xDDD70C; // values: 0 (Loading), 22 (Playing)
-    byte isFinished: "AVIAO3GAME.EXE", 0xDDE850; // values: 0 (Not Finished), 1 (Finished)
-}
-state("AVIAO3GAME", "EA - August 1st")
-{
-    string20 LevelName: "AVIAO3GAME.EXE", 0x1EA79D; // Level Name
-    float IGT: "AVIAO3GAME.EXE", 0xA6CE78; // In-Game Timer
-    float Loading: "AVIAO3GAME.EXE", 0xDDE88C; // values: 0 (Loading), 22 (Playing)
-    byte isFinished: "AVIAO3GAME.EXE", 0x783704; // values: 0 (Not Finished), 1 (Finished)
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1F280D; // Level Name
+    float IGT: "AVIAO3GAME.EXE", 0xA7CED4; // In-Game Timer
+    float Loading: "AVIAO3GAME.EXE", 0xDE6CEC; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3GAME.EXE", 0xDE7A30; // values: 0 (Not Finished), 1 (Finished)
 }
 state("AVIAO3", "Demo")
 {
@@ -25,17 +18,13 @@ init
     vars.doneMaps = new List<string>();
 
     switch (modules.First().ModuleMemorySize) {
-    case 15810560:
-        version = "EA - August 1st";
-        print("Using EA - August 1st version");
-        break;
-    case 15806464:
-        version = "EA - May 18th";
-        print("Using EA - May 18th version");
-        break;
     case 15306752:
         version = "Demo";
         print("Using Demo version");
+        break;
+    case 15847424:
+        version = "1.0";
+        print("Using 1.0 version");
         break;
     default:
         throw new Exception("Unknown version: " + modules.First().ModuleMemorySize);
@@ -43,48 +32,15 @@ init
 }
 update
 {
+    print(current.LevelName);
 }
 
 startup
 {
-    settings.Add("NGP", false, "Timer start after loading NG+ save");
-    settings.Add("2MAPA2.bsp", true, "MAPA2");
-    settings.Add("3MAPAtreze.bsp", true, "MAPATREZE");
-    settings.Add("4CARRETA.bsp", true, "CARRETA");
-    settings.Add("5salga.bsp", true, "SALGA");
-    settings.Add("chavinha19.bsp", true, "CHAVINHA");
-    settings.Add("pierniteroi.bsp", true, "PIERNITEROI");  
-    settings.Add("praca16.bsp", true, "PRACA");
-    settings.Add("5aniversarioguanaSAOGONCALO.bsp", true, "ANIVERSARIO");
-    settings.Add("surfamazonia.bsp", true, "SURFMAZONIA");
-    settings.Add("zegaroto.bsp", true, "ZEGAROTO");
-    settings.Add("RODOPRACAMARISACAMELO.bsp", true, "RODOPRACAMARISACAMELO");
-    settings.Add("partaginrocket.bsp", true, "PARTAGINROCKET");
-    settings.Add("myhouse.bsp", true, "MYHOUSE");   
-    settings.Add("jiboyaskate.bsp", true, "JIBOYASKATE"); 
-    settings.Add("6GLOBE.bsp", true, "GLOBE");
-    settings.Add("7niteroi.bsp", true, "NITEROI");
-    settings.Add("8varginhao.bsp", true, "VARGINHAO");
-    settings.Add("9cristopaodeacucar.bsp", true, "CRISTOPAODEACUCAR");
-    settings.Add("10cristopaodeacucar2.bsp", true, "CRISTOPAODEACUCAR2");
-    settings.Add("11EDINHO.bsp", true, "EDINHO");
-    settings.Add("12copaloco.bsp", true, "COPALOCO");
-    settings.Add("13Sambodromo.bsp", true, "SAMBODROMO");
-    settings.Add("14metrorio.bsp", true, "METRORIO");
-    settings.Add("15AMANHA.bsp", true, "AMANHA");
-    settings.Add("16ULTIMAFASE.bsp", true, "ULTIMAFASE");
-    settings.Add("17FINAL.bsp", true, "FINAL");
-    settings.Add("18FINALEPILOGUE.bsp", true, "FINALEPILOGUE");
 }
 start
 {
-    if (current.IGT <= 1.5 && current.LevelName == "start.bsp" && settings["NGP"] == false)
-    {
-        vars.doneMaps.Add("");
-        vars.doneMaps.Add(current.LevelName);
-        return true;
-    }
-    if (current.IGT <= 1.5 && current.LevelName == "1MAPA1.bsp" && settings["NGP"] == true)
+    if (old.Loading > 0 && old.Loading != current.Loading && current.LevelName == "start.bsp")
     {
         vars.doneMaps.Add("");
         vars.doneMaps.Add(current.LevelName);
@@ -101,14 +57,16 @@ split
 			return true;
 		}
 	}
-    // Last EA split
-    if(current.LevelName == "18FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0)
+    // Last split
+    if(current.LevelName == "29FINALEPILOGUE.bsp" && current.isFinished == 1 && current.Loading == 0 && vars.LastSplit == 0)
     {
+        vars.LastSplit++;
         return true;
     }
     // Last Demo split
-    if(current.LevelName == "salga.bsp" && current.isFinished == 1 && current.Loading == 0 && version == "Demo")
+    if(current.LevelName == "salga.bsp" && current.isFinished == 1 && current.Loading == 0 && vars.LastSplit == 0 && version == "Demo")
     {
+        vars.LastSplit++;
         return true;
     }
 }
@@ -139,4 +97,7 @@ onReset
 {
 	vars.doneMaps.Clear();    
 }
-
+onStart
+{
+    vars.LastSplit = 0;
+}
