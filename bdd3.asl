@@ -26,6 +26,8 @@ init
         version = "1.0";
         print("Using 1.0 version");
         break;
+	case 430080:
+		break;
     default:
         throw new Exception("Unknown version: " + modules.First().ModuleMemorySize);
     }
@@ -101,3 +103,4 @@ onStart
 {
     vars.LastSplit = 0;
 }
+
