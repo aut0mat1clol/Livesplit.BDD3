@@ -1,3 +1,10 @@
+state("AVIAO3GAME", "1.1")
+{
+    string20 LevelName: 0x1F280D; // Level Name
+    float IGT: 0xDE69C8; // In-Game Timer
+    float Loading: 0xDFBDEC; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: 0x1DF0CC; // values: 0 (Not Finished), 1 (Finished)
+}
 state("AVIAO3GAME", "1.0")
 {
     string20 LevelName: "AVIAO3GAME.EXE", 0x1F280D; // Level Name
@@ -105,5 +112,6 @@ onStart
 {
     vars.LastSplit = 0;
 }
+
 
 
