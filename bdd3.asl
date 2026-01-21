@@ -1,16 +1,16 @@
-state("AVIAO3GAME", "1.1")
-{
-    string20 LevelName: 0x1F280D; // Level Name
-    float IGT: 0xDE69C8; // In-Game Timer
-    float Loading: 0xDFBDEC; // values: 0 (Loading), 22 (Playing)
-    byte isFinished: 0x1DF0CC; // values: 0 (Not Finished), 1 (Finished)
-}
 state("AVIAO3GAME", "1.0")
 {
     string20 LevelName: "AVIAO3GAME.EXE", 0x1F280D; // Level Name
     float IGT: "AVIAO3GAME.EXE", 0xA7CED4; // In-Game Timer
     float Loading: "AVIAO3GAME.EXE", 0xDE6CEC; // values: 0 (Loading), 22 (Playing)
     byte isFinished: "AVIAO3GAME.EXE", 0xDE7A30; // values: 0 (Not Finished), 1 (Finished)
+}
+state("AVIAO3GAME", "1.2")
+{
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1F486D; // Level Name
+    float IGT: "AVIAO3GAME.EXE", 0xA8F0C4; // In-Game Timer
+    float Loading: "AVIAO3GAME.EXE", 0xED51C8; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3GAME.EXE", 0xDF9C50; // values: 0 (Not Finished), 1 (Finished)
 }
 state("AVIAO3", "Demo")
 {
@@ -33,10 +33,10 @@ init
         version = "1.0";
         print("Using 1.0 version");
         break;
-	case 430080:
-		version = "1.0";
-        print("Using 1.0 version");
-		break;
+    case 15921152:
+        version = "1.2";
+        print("Using 1.2 version");
+        break;
     default:
         throw new Exception("Unknown version: " + modules.First().ModuleMemorySize);
     }
@@ -83,7 +83,7 @@ split
 }
 isLoading
 {
-    if(current.Loading == 0)
+    if(current.Loading == 0 || current.isFinished > 0)
     {
         return true;
     }
@@ -112,6 +112,3 @@ onStart
 {
     vars.LastSplit = 0;
 }
-
-
-
