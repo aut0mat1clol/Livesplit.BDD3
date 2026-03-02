@@ -12,6 +12,13 @@ state("AVIAO3GAME", "1.2")
     float Loading: "AVIAO3GAME.EXE", 0xED51C8; // values: 0 (Loading), 22 (Playing)
     byte isFinished: "AVIAO3GAME.EXE", 0xDF9C50; // values: 0 (Not Finished), 1 (Finished)
 }
+state("AVIAO3GAME", "1.3")
+{
+    string20 LevelName: "AVIAO3GAME.EXE", 0x1F58DD; // Level Name
+    float IGT: "AVIAO3GAME.EXE", 0xDF9C48; // In-Game Timer
+    float Loading: "AVIAO3GAME.EXE", 0xDF9C8C; // values: 0 (Loading), 22 (Playing)
+    byte isFinished: "AVIAO3GAME.EXE", 0x1F292A; // values: 0 (Not Finished), 1 (Finished)
+}
 state("AVIAO3", "Demo")
 {
     string20 LevelName: "AVIAO3.exe", 0x1AC37D; // Level Name
@@ -32,6 +39,9 @@ init
     case 15847424:
         version = "1.0";
         print("Using 1.0 version");
+        break;
+    case 15925248:
+        version = "1.3";
         break;
     case 15921152:
         version = "1.2";
@@ -93,17 +103,17 @@ isLoading
     }
 
 }
-reset
-{
-    if(current.IGT <= 1.5 && current.LevelName == "start.bsp")
-    {  
-        return true;
-    }
-    if(current.IGT <= 1.5 && current.LevelName == "1MAPA1.bsp")
-    {  
-        return true;
-    }
-}
+// reset
+// {
+//     if(current.Loading > old.Loading  && current.LevelName == "start.bsp" )
+//     {  
+//         return true;
+//     }
+//     if(current.IGT <= 1.5 && current.LevelName == "1MAPA1.bsp")
+//     {  
+//         return true;
+//     }
+// }
 onReset
 {
 	vars.doneMaps.Clear();    
